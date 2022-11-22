@@ -1,7 +1,6 @@
 from .app import app
 from flask import render_template
-import yaml , os.path
-from yaml import Loader
+from .models import get_sample
 @app.route("/")
 
 
@@ -9,4 +8,10 @@ from yaml import Loader
 
 def home():
     return render_template("home.html",title ="Hello World!",names =["Pierre", "Paul", "Corinne"]
-                           ,data = yaml.load(open("tuto/static/data.yml"),Loader=Loader))
+                           ,books = get_sample())
+
+@app.route("/detail/<id>")
+def detail(id):
+    books = get_sample()
+    book = books[int(id)]
+    return render_template("detail.html",x=book)
