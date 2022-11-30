@@ -11,5 +11,7 @@ def mkpath(p):
     os.path.join(
     os.path.dirname(__file__),
     p))
+    
 app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+ mkpath("../tuto.db"))
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
