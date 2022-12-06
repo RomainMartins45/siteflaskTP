@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField
 from wtforms . validators import DataRequired
 from flask_login import UserMixin
+from .app import login_manager
 
 class Author(db.Model):
     id = db.Column(db.Integer , primary_key=True)
@@ -34,7 +35,9 @@ class User(db.Model,UserMixin):
     def get_id(self):
         return self.username
 
-
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(username)
 
 def get_sample():
     return Book.query.limit(10).all()

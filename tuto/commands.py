@@ -13,7 +13,7 @@ def loaddb(filename):
     books = yaml.load(open(filename),Loader=yaml.Loader)
     # import des modèles
     from .models import Author, Book
-    # premi ère passe : création de tous les auteurs
+    # première passe : création de tous les auteurs
     authors = {}
     for b in books :
         a = b["author"]
@@ -22,7 +22,7 @@ def loaddb(filename):
             db.session.add(o)
             authors[a] = o
     db.session.commit()
-    # deuxi ème passe : création de tous les livres
+    # deuxième passe : création de tous les livres
     for b in books :
         a = authors[b["author"]]
         o = Book(price = b["price"],
