@@ -1,7 +1,7 @@
 import os
 from .app import app, db
 from flask import render_template, url_for, redirect, request
-from .models import Author, Book, get_author, get_sample, get_sample2, AuthorForm
+from .models import Author, Book, get_author, get_sample, get_sample2, AuthorForm,Favorites
 from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField
 from wtforms . validators import DataRequired
@@ -75,6 +75,20 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
-@app.route("/favorites/<String:username>")
-def favorites(user):
-    return None
+@app.route("/favorites/<username>")
+def favorites(username):
+    favoris = Favorites.query.filter(Favorites.user_username == username).all()
+    books = list()
+    for favori in favoris:
+        books.append(favori)
+    return render_template("favoris.html",books=books)
+
+@app.route("/books")
+def books():
+    return render_template("books.html",book=get_sample())
+
+@app.route("/detail_book/<int:id>")
+def detail_book(id):
+    books = get_sample()
+    book = books[int(id-1)]
+    return render_template("detail_book.html",book=book)

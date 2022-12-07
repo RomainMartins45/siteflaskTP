@@ -1,9 +1,8 @@
 h1 {color: red;}
 
-div.sample{
-text-align: center;
-width: 100%;
-display: inline-grid;
+.sample{
+    text-align: center;
+    width: 100%;
 }
 
 main{
@@ -17,6 +16,16 @@ footer{
 main > .container {
     padding: 60px 15px 0;
 }
-#favoris {
+#nav-button {
     color: darkgoldenrod;
+    margin-left: 20px;
+}
+.images_book{
+    margin: 2%;
+}
+
+.img_book{
+    width: 27%;
+    margin: auto;
+    display: flex;
 }

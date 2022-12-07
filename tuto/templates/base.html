@@ -42,7 +42,9 @@
                         <li><a href="{{ url_for("logout") }}">
                         <span class="glyphicon glyphicon-log-out" title ="Logout">Logout</span></a></li>
                         <li><a href="{{ url_for("favorites", username=current_user.username )}}">
-                        <span id="favoris" title ="Favorites">Favorites</span></a></li>
+                        <span id="nav-button" title ="Favorites">Favorites</span></a></li>
+                        <li><a href="{{ url_for("books") }}">
+                          <span id="nav-button" title ="All-Books">Books</span></a></li>
                       {% endif %}
                       </ul>
                   </div>
