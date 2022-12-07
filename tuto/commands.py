@@ -41,7 +41,7 @@ def syncdb():
 @app.cli.command()
 @click.argument("username")
 @click.argument("password")
-def newuser(username ,password ):
+def newuser(username ,password):
     """Adds a new user."""
     m = sha256()
     m.update(password.encode())

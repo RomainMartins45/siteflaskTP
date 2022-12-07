@@ -31,6 +31,8 @@ class AuthorForm(FlaskForm):
 class User(db.Model,UserMixin):
     username = db.Column(db.String(50) ,primary_key = True)
     password = db.Column(db.String(64))
+    # book_id = db.Column(db.Integer , db.ForeignKey("book.id"))
+    # book = db.relationship("Book",backref=db.backref("users", lazy="dynamic"))
 
     def get_id(self):
         return self.username

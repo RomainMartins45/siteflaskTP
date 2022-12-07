@@ -5,11 +5,9 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='home.css')}}">
 {% block content %}
     <div class="sample">
-        {% for x in authors %}
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for("edit_author", id=x.id )}}"></a>
-        {% endif %}
-            <a href = {{ url_for("edit_author", id=x.id) }} >{{ x.name }}</a>
+        {% for x in books %}
+        <img src="{{ url_for('static', filename='images/'+x.img)}}"
+        alt="{{x.title}}" title="{{x.title}}">
         {% endfor %}
         </div>
 {% endblock %}

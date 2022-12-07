@@ -7,6 +7,7 @@ import os.path
 app = Flask(__name__)
 Bootstrap(app)
 login_manager = LoginManager(app)
+login_manager.login_view = "login"
 
 def mkpath(p):
     return os.path.normpath(
