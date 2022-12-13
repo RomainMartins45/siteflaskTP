@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% block styles %}
+{% block style %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='home.css')}}"> 
 {% endblock %}
 {% block content %}
 <div class="card border-light mb-3 mycard">
@@ -10,9 +9,11 @@
             <img src="{{ url_for('static', filename='images/'+book.img) }}" alt="Couverture de {{ book.title }}"
                     title="{{ book.title }}" class="img_book" />
     </a>
+    <a href="{{ url_for("add_favoris",username = current_user.username,book_id = book.id) }}">
+    <button class="btn btn-defaut" id="bouton-fav">Ajouter aux favoris</button></a>
     <div class="card-body">
             <h5 class="card-text card-footer">
-                    Auteur : {{ book.author }}
+                    Auteur : {{ book.author.name }}
             </h5>
             <h6 class="card-text card-footer">
                 Prix : {{ book.price }} €

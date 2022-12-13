@@ -15,8 +15,7 @@ app.config['SECRET_KEY'] = "7661d666-10ea-4157-9d59-70cf3502dc2e"
 @app.route("/")
 
 def home():
-    return render_template("home.html",title ="Hello World!",names =["Pierre", "Paul", "Corinne"]
-                           ,authors = get_sample2())
+    return render_template("home.html",authors = get_sample2())
 
 @app.route("/edit/author/<int:id>")
 def edit_author(id):
@@ -80,7 +79,8 @@ def favorites(username):
     favoris = Favorites.query.filter(Favorites.user_username == username).all()
     books = list()
     for favori in favoris:
-        books.append(favori)
+        book = Book.query.filter(Book.id == favori.book_id).first()
+        books.append(book)
     return render_template("favoris.html",books=books)
 
 @app.route("/books")
@@ -92,3 +92,10 @@ def detail_book(id):
     books = get_sample()
     book = books[int(id-1)]
     return render_template("detail_book.html",book=book)
+
+@app.route("/favorites/<username>/<int:book_id>")
+def add_favoris(username,book_id):
+    favoris = Favorites(book_id = book_id,user_username= username)
+    db.session.add(favoris)
+    db.session.commit()
+    return favorites(username)

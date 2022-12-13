@@ -31,14 +31,15 @@ class AuthorForm(FlaskForm):
 class User(db.Model,UserMixin):
     username = db.Column(db.String(50) ,primary_key = True)
     password = db.Column(db.String(64))
+    
+    def get_id(self):
+           return (self.username)
 
 class Favorites(db.Model):
     book_id = db.Column(db.Integer , db.ForeignKey("book.id"),primary_key = True)
-    book = db.relationship("Book",backref=db.backref("favorites", lazy="dynamic"))
     user_username = db.Column(db.String(50) , db.ForeignKey("user.username"),primary_key = True)
-    user = db.relationship("User",backref=db.backref("favorites", lazy="dynamic"))
 
-    def get_id(self):
+    def get_user(self):
         return self.username
 
 @login_manager.user_loader
