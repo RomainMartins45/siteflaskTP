@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block style %}
-{{ super() }}
+{{ super () }}
 {% endblock %}
 <link rel="stylesheet" href="{{ url_for('static',filename='home.css')}}">
 {% block content %}
-<form class = "form-horizontal" role = "form" method = "post" action = "{{ url_for('login')}}">
+    <form class = "form-horizontal" role = "form" method = "post" action = "{{ url_for('register')}}">
     {{ form.hidden_tag() }}
     <div class = "form-group">  
         <label for="username" class ="col-sm-2 control-label">
@@ -24,10 +24,10 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-defaut">Sign in</button>
+            <button type="submit" class="btn btn-defaut">Register</button>
         </div>
     </div>
 </form>
-    <a href= {{ url_for('go_to_register')}}>
-    <button class="btn btn-defaut">Register</button></a>
 {% endblock %}
+    </body>
+</html>

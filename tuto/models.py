@@ -64,5 +64,6 @@ def is_favorite(username,book_id):
 
 def user_existe(username,password):
     user = User.query.filter(User.password == password, User.username == username).all()
+    print(user)
 
     
