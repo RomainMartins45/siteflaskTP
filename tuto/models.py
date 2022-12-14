@@ -54,3 +54,15 @@ def get_sample2():
 
 def get_author(id):
     return Author.query.filter(Author.id == id).first()
+
+def is_favorite(username,book_id):
+    favori = Favorites.query.filter(Favorites.user_username == username, Favorites.book_id == book_id).all()
+    if favori == []:
+        return False
+    else:
+        return True
+
+def user_existe(username,password):
+    user = User.query.filter(User.password == password, User.username == username).all()
+
+    

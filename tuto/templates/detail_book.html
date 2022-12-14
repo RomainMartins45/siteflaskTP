@@ -9,8 +9,12 @@
             <img src="{{ url_for('static', filename='images/'+book.img) }}" alt="Couverture de {{ book.title }}"
                     title="{{ book.title }}" class="img_book" />
     </a>
+    {% if current_user.is_authenticated%}
+    <a href="{{ url_for("sup_favoris",username = current_user.username,book_id = book.id) }}">
+    <button class="btn btn-defaut" id="bouton-sup">Supprimer des favoris</button></a>
     <a href="{{ url_for("add_favoris",username = current_user.username,book_id = book.id) }}">
-    <button class="btn btn-defaut" id="bouton-fav">Ajouter aux favoris</button></a>
+        <button class="btn btn-defaut" id="bouton-fav">Ajouter aux favoris</button></a>
+    {% endif %}
     <div class="card-body">
             <h5 class="card-text card-footer">
                     Auteur : {{ book.author.name }}

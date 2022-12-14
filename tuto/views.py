@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField
 from wtforms . validators import DataRequired
 from wtforms import PasswordField
-from .models import User
+from .models import User, is_favorite
 from hashlib import sha256
 from flask_login import login_user, current_user,login_required,logout_user
 
@@ -69,6 +69,19 @@ def login():
             return redirect(next)
     return render_template("login.html",form=f)
 
+@app.route("/login/", methods =("GET","POST",))
+def register():
+    f = LoginForm()
+    if not f.is_submitted():
+        f.next.data = request.args.get("next")
+    elif f.validate_on_submit():
+        user = f.get_authenticated_user()
+        if user:
+            login_user(user)
+            next = f.next.data or url_for("home")
+            return redirect(next)
+    return render_template("login.html",form=f)
+
 @app.route("/logout/")
 def logout():
     logout_user()
@@ -95,7 +108,16 @@ def detail_book(id):
 
 @app.route("/favorites/<username>/<int:book_id>")
 def add_favoris(username,book_id):
-    favoris = Favorites(book_id = book_id,user_username= username)
-    db.session.add(favoris)
-    db.session.commit()
+    if not is_favorite(username,book_id):
+        favoris = Favorites(book_id = book_id,user_username= username)
+        db.session.add(favoris)
+        db.session.commit()
+    return favorites(username)
+
+@app.route("/favorites/<username><int:book_id>")
+def sup_favoris(username,book_id):
+    print(is_favorite(username,book_id))
+    if is_favorite(username,book_id):
+        Favorites.query.filter(Favorites.user_username == username , Favorites.book_id == book_id).delete()
+        db.session.commit()
     return favorites(username)

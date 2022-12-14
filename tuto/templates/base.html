@@ -37,6 +37,11 @@
                       <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
+                      {% if not current_user.is_authenticated %}
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href = {{ url_for("login") }} >Login</a>
+                      </li>
+                      {% endif %}
                       {% if current_user.is_authenticated %}
                         <li><a>{{ current_user.username }}</a></li>
                         <li><a href="{{ url_for("logout") }}">
