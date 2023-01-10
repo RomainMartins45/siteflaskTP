@@ -15,6 +15,8 @@
     <a href="{{ url_for("add_favoris",username = current_user.username,book_id = book.id) }}">
         <button class="btn btn-defaut" id="bouton-fav">Ajouter aux favoris</button></a>
     {% endif %}
+    <a href="{{ url_for("sup_book",book_id = book.id) }}">
+        <button class="btn btn-defaut" id="bouton-fav">Supprimer ce livre</button></a>
     <div class="card-body">
             <h5 class="card-text card-footer">
                     Auteur : {{ book.author.name }}

@@ -118,7 +118,9 @@ def books():
 @app.route("/detail_book/<int:id>")
 def detail_book(id):
     books = get_sample()
-    book = books[int(id-1)]
+    for livre in books:
+        if livre.get_id() == id:
+            book = livre
     return render_template("detail_book.html",book=book)
 
 @app.route("/favorites/<username>/<int:book_id>")
@@ -136,3 +138,10 @@ def sup_favoris(username,book_id):
         Favorites.query.filter(Favorites.user_username == username , Favorites.book_id == book_id).delete()
         db.session.commit()
     return favorites(username)
+
+@app.route("/books/<int:book_id>")
+def sup_book(book_id):
+    book = Book.query.filter(Book.id == book_id).first()
+    db.session.delete(book)
+    db.session.commit()
+    return render_template("books.html",book=get_sample())  

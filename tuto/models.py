@@ -24,6 +24,9 @@ class Book(db.Model):
     def __repr__(self) -> str:
         return "<Book (%d) %s>" % (self.id, self.title)
     
+    def get_id(self):
+        return self.id
+    
 class AuthorForm(FlaskForm):
     id = HiddenField("id")
     name = StringField("Nom",validators =[DataRequired()])
