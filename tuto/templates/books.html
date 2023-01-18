@@ -4,10 +4,10 @@
 {% endblock %}
 <link rel="stylesheet" href="{{ url_for('static',filename='home.css')}}">
 {% block content %}
-    <div class="sample">
-        {% for x in books %}
+    <div class="sampl">
+        {% for x in book %}
         <a href="{{ url_for("detail_book", id = x.id ) }}">
-        <img src="{{ url_for('static', filename='images/'+x.img)}}"
+        <img class = "images_book" src="{{ url_for('static', filename='images/'+x.img)}}"
         alt="{{x.title}}" title="{{x.title}}"></a>
         {% endfor %}
         </div>
