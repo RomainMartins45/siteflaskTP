@@ -10,8 +10,10 @@
                     title="{{ book.title }}" class="img_book" />
     </a>
     {% if current_user.is_authenticated%}
+    {% if favori %}
     <a href="{{ url_for("sup_favoris",username = current_user.username,book_id = book.id) }}">
     <button class="btn btn-defaut" id="bouton-sup">Supprimer des favoris</button></a>
+    {% endif %}
     <a href="{{ url_for("add_favoris",username = current_user.username,book_id = book.id) }}">
         <button class="btn btn-defaut" id="bouton-fav">Ajouter aux favoris</button></a>
     {% endif %}
@@ -25,5 +27,9 @@
                 Prix : {{ book.price }} €
         </h6>
     </div>
+    <p>D'autres utilisateurs qui aime ce livre</p>
+    {% for user in users %}
+    <p>{{ user }}</p>
+    {% endfor %}
 </div>
 {% endblock %}

@@ -11,6 +11,8 @@
         alt="{{x.title}}" title="{{x.title}}"></a>
         {% endfor %}
         </div>
+        <a href="{{ url_for("edit_author",id = auteur.id) }}">
+            <button class="btn btn-defaut" id="bouton-fav">Editer l'auteur {{ auteur.name }}</button></a>
 {% endblock %}
     </body>
 </html>

@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField
 from wtforms . validators import DataRequired
 from wtforms import PasswordField
-from .models import User, is_favorite, user_existe
+from .models import User, is_favorite, user_existe, get_book_from_author, SearchForm
 from hashlib import sha256
 from flask_login import login_user, current_user,login_required,logout_user
 
@@ -16,6 +16,15 @@ app.config['SECRET_KEY'] = "7661d666-10ea-4157-9d59-70cf3502dc2e"
 
 def home():
     return render_template("home.html",authors = get_sample2())
+
+@app.route("/edit_author/<int:id>",methods=["POST"])
+def editer_auteur(id):
+    f = AuthorForm()
+    auteur = Author.query.filter(Author.id == id).first()
+    auteur.name = f.name.data
+    db.session.commit()
+    return render_template("home.html",authors = get_sample2())
+
 
 @app.route("/edit/author/<int:id>")
 def edit_author(id):
@@ -76,7 +85,7 @@ def register():
         if user is None:
             password = f.password.data
             name = f.username.data
-            if not user_existe(name,password):
+            if not user_existe(name):
                 user = User(username = name,password = password) 
                 db.session.add(user)
                 db.session.commit()
@@ -113,15 +122,22 @@ def favorites(username):
 
 @app.route("/books")
 def books():
+    f = SearchForm()
     return render_template("books.html",book=get_sample())
 
 @app.route("/detail_book/<int:id>")
 def detail_book(id):
     books = get_sample()
+    users = list()
     for livre in books:
         if livre.get_id() == id:
             book = livre
-    return render_template("detail_book.html",book=book)
+    favoris = Favorites.query.filter(Favorites.book_id == id).all()
+    for favori in favoris:
+        username = favori.get_user()
+        users.append(username)
+    a = is_favorite(current_user.username,id)
+    return render_template("detail_book.html",book=book,users=users,favori=a)
 
 @app.route("/favorites/<username>/<int:book_id>")
 def add_favoris(username,book_id):
@@ -141,7 +157,14 @@ def sup_favoris(username,book_id):
 
 @app.route("/books/<int:book_id>")
 def sup_book(book_id):
+    f = SearchForm()
     book = Book.query.filter(Book.id == book_id).first()
     db.session.delete(book)
     db.session.commit()
-    return render_template("books.html",book=get_sample())  
+    return render_template("books.html",book=get_sample())
+
+@app.route("/booksof/<int:id>")
+def book_from(id):
+    books = get_book_from_author(id)
+    auteur = Author.query.filter(Author.id == id).first()
+    return render_template("author_books.html",book=books,auteur=auteur)

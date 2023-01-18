@@ -43,8 +43,6 @@ def syncdb():
 @click.argument("password")
 def newuser(username ,password):
     """Adds a new user."""
-    m = sha256()
-    m.update(password.encode())
-    u = User(username =username, password =m.hexdigest())
+    u = User(username =username, password =password)
     db.session.add(u)
     db.session.commit()

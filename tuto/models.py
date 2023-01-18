@@ -31,6 +31,9 @@ class AuthorForm(FlaskForm):
     id = HiddenField("id")
     name = StringField("Nom",validators =[DataRequired()])
 
+class SearchForm(FlaskForm):
+    nomAuteur = StringField("Poids",validators =[DataRequired()])
+
 class User(db.Model,UserMixin):
     username = db.Column(db.String(50) ,primary_key = True)
     password = db.Column(db.String(64))
@@ -43,7 +46,7 @@ class Favorites(db.Model):
     user_username = db.Column(db.String(50) , db.ForeignKey("user.username"),primary_key = True)
 
     def get_user(self):
-        return self.username
+        return self.user_username
 
 @login_manager.user_loader
 def load_user(username):
@@ -65,8 +68,12 @@ def is_favorite(username,book_id):
     else:
         return True
 
-def user_existe(username,password):
-    user = User.query.filter(User.password == password, User.username == username).all()
-    print(user)
+def user_existe(username):
+    user = User.query.filter(User.username == username).all()
+    return user != []
+
+def get_book_from_author(id):
+    book = Book.query.filter(Book.author_id == id).all()
+    return book
 
     

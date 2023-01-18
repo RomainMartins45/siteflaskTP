@@ -3,6 +3,12 @@ h1 {color: red;}
 .sample{
     text-align: center;
     width: 100%;
+    display: inline-grid;
+}
+
+.sampl{
+    text-align: center;
+    width: 100%;
 }
 
 main{
@@ -48,4 +54,9 @@ main > .container {
     align-items: right;
     position: relative;
     left: 83%;
+}
+
+#test{
+    float: right;
+    position: relative;
 }
